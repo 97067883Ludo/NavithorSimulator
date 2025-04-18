@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavithorSimulator", "NavithorSimulator\NavithorSimulator.csproj", "{BC9D5826-06F1-4BEA-B078-2B8C712B7057}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseContext", "DatabaseContext\DatabaseContext.csproj", "{32BF82EF-E1AA-4BFB-81C0-9861C1D80DAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpServer", "TcpServer\TcpServer.csproj", "{54D36B93-CE0D-41D3-90AF-F9FFE4053E28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC9D5826-06F1-4BEA-B078-2B8C712B7057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC9D5826-06F1-4BEA-B078-2B8C712B7057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC9D5826-06F1-4BEA-B078-2B8C712B7057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC9D5826-06F1-4BEA-B078-2B8C712B7057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32BF82EF-E1AA-4BFB-81C0-9861C1D80DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32BF82EF-E1AA-4BFB-81C0-9861C1D80DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32BF82EF-E1AA-4BFB-81C0-9861C1D80DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32BF82EF-E1AA-4BFB-81C0-9861C1D80DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54D36B93-CE0D-41D3-90AF-F9FFE4053E28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54D36B93-CE0D-41D3-90AF-F9FFE4053E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54D36B93-CE0D-41D3-90AF-F9FFE4053E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54D36B93-CE0D-41D3-90AF-F9FFE4053E28}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

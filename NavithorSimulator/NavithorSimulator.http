@@ -1,0 +1,6 @@
+@NavithorSimulator_HostAddress = http://localhost:5133
+
+GET {{NavithorSimulator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
