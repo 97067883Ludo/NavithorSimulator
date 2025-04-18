@@ -1,5 +1,8 @@
 ﻿using System.Text;
 using System.Xml;
+using System.Xml.Linq;
+using DatabaseContext;
+using DatabaseContext.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NavithorSimulator.Controllers;
@@ -8,7 +11,13 @@ namespace NavithorSimulator.Controllers;
 public class RouteController : ControllerBase
 {
 
-    
+    private readonly DataContext _dataContext;
+
+    public RouteController(DataContext dataContext)
+    {
+        _dataContext = dataContext;
+    }
+
     [HttpPost]
     public IActionResult Post(IFormFile file)
     {
@@ -18,48 +27,30 @@ public class RouteController : ControllerBase
         }
         // Process the uploaded file here
         
-        string filecontents = NewMethod(file);
-        XmlDocument xmlcontent = new XmlDocument();
-        xmlcontent.LoadXml(filecontents);
-
-        foreach (object Object in xmlcontent.ChildNodes)
+        // string filecontents = NewMethod(file);
+        XDocument xmlcontent = XDocument.Load(file.OpenReadStream());
+        var result = xmlcontent.Root?.Element("symbolic_points").Elements("symbolic_point");
+        HashSet<SymbolicPoint> symbolicPoints = [];
+        foreach (XElement element in result)
         {
-            GetElements(Object);
+            SymbolicPoint newSymbolicPoint = new SymbolicPoint()
+            {
+                x = float.Parse(element.Element("x")?.Value ?? ""),
+                y = float.Parse(element.Element("y")?.Value ?? ""),
+                SymbolicPointName = element.Element("name")?.Value ?? "",
+            };
+            symbolicPoints.Add(newSymbolicPoint);
         }
+
+        _dataContext.SymbolicPoints.AddRangeAsync(symbolicPoints);
+        _dataContext.SaveChangesAsync();
         
         return Ok();
     }
 
-    private void GetElements(object Objects)
+    [HttpGet]
+    public IActionResult Get()
     {
-        if (Objects is XmlDeclaration declaration)
-        {
-            if (declaration.ChildNodes.Count > 0)
-            {
-                foreach (object childNode in declaration.ChildNodes)
-                {
-                    
-                }
-            }
-
-        }
-    }
-
-    private string NewMethod(IFormFile file)
-    {
-        StringBuilder fileContents = new StringBuilder();
-        using(var stream = file.OpenReadStream())
-        {
-            // Read the file stream
-            using (var reader = new StreamReader(stream))
-            {
-                string? line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    fileContents.AppendLine(line);
-                }
-            }
-        }
-        return fileContents.ToString();
+        return Ok(_dataContext.SymbolicPoints.ToList());
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DatabaseContext;
 
-public sealed class DataContext : DbContext
+public class DataContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
