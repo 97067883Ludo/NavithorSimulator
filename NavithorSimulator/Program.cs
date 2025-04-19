@@ -1,4 +1,5 @@
 using DatabaseContext;
+using TcpServer.buisnessLogic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>();
+
+builder.Services.AddSingleton<IWewoTcpListener, WewoTcpListener>();
 
 var app = builder.Build();
 
