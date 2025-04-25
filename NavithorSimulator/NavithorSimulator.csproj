@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DatabaseContext\DatabaseContext.csproj" />
+      <ProjectReference Include="..\Receiving\Receiving.csproj" />
       <ProjectReference Include="..\TcpServer\TcpServer.csproj" />
     </ItemGroup>
 

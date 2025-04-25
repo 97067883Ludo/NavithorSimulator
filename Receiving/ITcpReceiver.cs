@@ -1,6 +1,6 @@
 ﻿namespace Receiving;
 
-public class Class1
+public interface ITcpReceiver
 {
     
 }

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using TcpServer.buisnessLogic;
+using TcpServer;
 
 namespace NavithorSimulator.Controllers;
 
@@ -7,17 +7,17 @@ namespace NavithorSimulator.Controllers;
 [Route("api/[controller]")]
 public class TcpServerController : ControllerBase
 {
-    private IWewoTcpListener _tcpListener { get; init; }
+    private ITcpServer _tcpServer { get; init; }
 
-    public TcpServerController(IWewoTcpListener tcpListener)
+    public TcpServerController(ITcpServer tcpListener)
     {
-        _tcpListener = tcpListener;
+        _tcpServer = tcpListener;
     }
 
     [HttpPost]
     public IActionResult StartServer()
     {
-        _tcpListener.StartServer();
+        _tcpServer.StartServer();
         return Ok();
     }
 }

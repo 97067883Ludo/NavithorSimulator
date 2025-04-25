@@ -10,4 +10,8 @@
       <ProjectReference Include="..\common\common.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="buisnessLogic\Interfaces\" />
+    </ItemGroup>
+
 </Project>

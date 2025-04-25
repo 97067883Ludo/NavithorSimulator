@@ -2,7 +2,7 @@ using common.Data.FrameUtils;
 
 namespace common.Data.EventArgs;
 
-public class OnReceiveArgs
+public record OnReceiveArgs
 {
     public OnReceiveArgs(Frame frame, byte[] data)
     {

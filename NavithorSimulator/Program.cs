@@ -1,5 +1,8 @@
 using DatabaseContext;
-using TcpServer.buisnessLogic;
+using Receiving;
+using Receiving.ReceiveStrategies;
+using Receiving.ReceiveStrategies.Interfaces;
+using TcpServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +15,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>();
 
-builder.Services.AddSingleton<IWewoTcpListener, WewoTcpListener>();
+builder.Services.AddSingleton<ITcpServer, TcpServer.TcpServer>();
+
+// Register the receive strategies
+builder.Services.AddSingleton<IReceiveStrategy, GetVersionStrategy>();
+
+// Add the TcpReceiver as a singleton
+builder.Services.AddHostedService<TcpReceiver>();
 
 var app = builder.Build();
 
