@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseContext", "Database
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpServer", "TcpServer\TcpServer.csproj", "{54D36B93-CE0D-41D3-90AF-F9FFE4053E28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "common", "common\common.csproj", "{2797D954-2618-4644-8BEB-8FA3CF5DF920}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Receiving", "Receiving\Receiving.csproj", "{3984B93E-48CF-41B8-883A-EC713B024967}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{54D36B93-CE0D-41D3-90AF-F9FFE4053E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54D36B93-CE0D-41D3-90AF-F9FFE4053E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54D36B93-CE0D-41D3-90AF-F9FFE4053E28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2797D954-2618-4644-8BEB-8FA3CF5DF920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2797D954-2618-4644-8BEB-8FA3CF5DF920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2797D954-2618-4644-8BEB-8FA3CF5DF920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2797D954-2618-4644-8BEB-8FA3CF5DF920}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3984B93E-48CF-41B8-883A-EC713B024967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3984B93E-48CF-41B8-883A-EC713B024967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3984B93E-48CF-41B8-883A-EC713B024967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3984B93E-48CF-41B8-883A-EC713B024967}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

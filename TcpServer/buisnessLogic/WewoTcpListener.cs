@@ -1,10 +1,14 @@
 using System.Net;
 using System.Net.Sockets;
+using common.Data.EventArgs;
+using common.Data.FrameUtils;
 
 namespace TcpServer.buisnessLogic;
 
 public class WewoTcpListener : IWewoTcpListener
 {
+    public static event OnReceive OnReceive;
+    
     private TcpListener _tcpListener { get; init; }
 
     private bool Listening { get; set; }
@@ -39,14 +43,16 @@ public class WewoTcpListener : IWewoTcpListener
                 Console.WriteLine("Startlistening");
                 Listening = true;
                 using TcpClient handler = await _tcpListener.AcceptTcpClientAsync();
-                await using NetworkStream stream = handler.GetStream();
-                byte[] buffer = new byte[9];
-                if (stream.Read(buffer) == 9)
-                {
-                    
-                }
+                NetworkStream stream = handler.GetStream();
+                byte[] header = new byte[9];
+                stream.ReadExactly(header);
+                Frame frame = FrameInterpeter.Deserialize(header);
+                byte[] data = new byte[frame.DataLength];
+                stream.ReadExactly(data);
+                OnReceive.Invoke(this, new OnReceiveArgs(frame, data));
             }
         });
     }
-
 }
+
+public delegate void OnReceive(object sender, OnReceiveArgs args);
