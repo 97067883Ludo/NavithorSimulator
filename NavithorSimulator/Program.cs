@@ -21,7 +21,7 @@ builder.Services.AddSingleton<ITcpServer, TcpServer.TcpServer>();
 builder.Services.AddSingleton<IReceiveStrategy, GetVersionStrategy>();
 
 // Add the TcpReceiver as a singleton
-builder.Services.AddHostedService<TcpReceiver>();
+builder.Services.AddSingleton<TcpReceiver>();
 
 var app = builder.Build();
 

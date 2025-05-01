@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Receiving;
 using TcpServer;
 
 namespace NavithorSimulator.Controllers;
@@ -9,7 +10,7 @@ public class TcpServerController : ControllerBase
 {
     private ITcpServer _tcpServer { get; init; }
 
-    public TcpServerController(ITcpServer tcpListener)
+    public TcpServerController(ITcpServer tcpListener, TcpReceiver tcpReceiver) //TODO: create an instance of the TcpReceiver somewhere else...
     {
         _tcpServer = tcpListener;
     }

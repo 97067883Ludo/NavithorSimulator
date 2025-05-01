@@ -1,8 +1,10 @@
+using common.Data.Sending;
+
 namespace TcpServer;
 
 public interface ITcpServer
 {
-    public bool Send(byte[] dataToSend);
+    public void Send(SendTask dataToSend);
     
     public void StartServer();
 }

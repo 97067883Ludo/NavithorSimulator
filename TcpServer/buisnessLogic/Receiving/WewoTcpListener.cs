@@ -9,12 +9,11 @@ public class WewoTcpListener : IWewoTcpListener
 {
     public static event OnReceive? OnReceive;
     
-    private TcpServer _tcpServer;
     private bool Listening { get; set; }
     
-    public WewoTcpListener(TcpServer tcpServer)
+    public WewoTcpListener()
     {
-        _tcpServer = tcpServer;
+
     }
 
     public void StartListing(TcpClient handler)
@@ -54,13 +53,7 @@ public class WewoTcpListener : IWewoTcpListener
 
         OnReceive?.Invoke(this, new OnReceiveArgs(frame, data));
     }
-    
-    private void SendMessage(object sender, OnSendArgs args)
-    {
-        
-    }
 }
 
 public delegate void OnReceive(object sender, OnReceiveArgs args);
 
-public delegate void OnSend(object sender, OnSendArgs args);

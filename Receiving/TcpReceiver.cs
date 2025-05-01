@@ -1,11 +1,10 @@
 ﻿using common.Data.EventArgs;
-using Microsoft.Extensions.Hosting;
 using Receiving.ReceiveStrategies.Interfaces;
 using TcpServer;
 
 namespace Receiving;
 
-public class TcpReceiver : BackgroundService
+public class TcpReceiver
 {
     private IEnumerable<IReceiveStrategy> _receiveStrategies;
     public TcpReceiver(IEnumerable<IReceiveStrategy> receiveStrategies)
@@ -18,15 +17,10 @@ public class TcpReceiver : BackgroundService
     {
         foreach (IReceiveStrategy receiveStrategy in _receiveStrategies)
         {
-            if (receiveStrategy.MessageType == args.Frame.MessageType)
+            if (receiveStrategy.MessageId == args.Frame.Id)
             {
                 receiveStrategy.Execute(args.Frame, args.Data);
             }
         }
-    }
-
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        return Task.CompletedTask;
     }
 }

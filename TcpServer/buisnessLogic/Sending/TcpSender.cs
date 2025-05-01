@@ -1,10 +1,13 @@
-﻿using common.Data.Sending;
+﻿using System.Net.Sockets;
+using common.Data.Sending;
 
 namespace TcpServer.buisnessLogic.Sending;
 
-public class TcpSender : TcpServer
+public class TcpSender
 {
-    public static Queue<SendTask> SendQueue { get; set; } = new();
+    private Queue<SendTask> SendQueue { get; set; } = new();
+
+    private TcpClient _tcpClient;
     
     public TcpSender()
     {
@@ -14,10 +17,23 @@ public class TcpSender : TcpServer
     public void Send()
     {
         SendTask task = SendQueue.Dequeue();
-
+        
         if (_tcpClient.Connected)
         {
             _tcpClient.Client.Send(TaskConverter.ToBytes(task));
         }
     }
+
+    public void Start(TcpClient client)
+    {
+        _tcpClient = client;
+        
+    }
+
+    public void AddMessageToQueue(SendTask dataToSend)
+    {
+        SendQueue.Enqueue(dataToSend);
+        Send();
+    }
+
 }

@@ -23,7 +23,20 @@ public static class FrameInterpeter
     public static byte[] Serialize(Frame frame)
     {
         byte[] frameBytes = new byte[9];
-        
+
+        AppendRange(ref frameBytes, BitConverter.GetBytes(frame.Id));
+        AppendRange(ref frameBytes, BitConverter.GetBytes(frame.SenderId), 2);
+        AppendRange(ref frameBytes, BitConverter.GetBytes(frame.ReceiverId), 4);
+        AppendRange(ref frameBytes, BitConverter.GetBytes(frame.DataLength), 7);
+
         return frameBytes;
+    }
+
+    private static void AppendRange(ref byte[] dest, byte[] source, int offset = 0)
+    {
+        for (int i = 0; i < source.Length; i++)
+        {
+            dest[i + offset] = source[i];
+        }
     }
 }

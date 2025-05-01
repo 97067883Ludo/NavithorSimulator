@@ -1,6 +1,10 @@
-﻿namespace common.Data.Sending;
+﻿using common.Data.FrameUtils;
+
+namespace common.Data.Sending;
 
 public struct SendTask
 {
+    public Frame frame;
+    
     
 }
