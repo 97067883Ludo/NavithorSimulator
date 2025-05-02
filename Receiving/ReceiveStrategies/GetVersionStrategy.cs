@@ -1,6 +1,9 @@
-﻿using common.Data.EventArgs;
+﻿using System.Reflection;
+using System.Text;
+using common.Data.EventArgs;
 using common.Data.FrameUtils;
 using common.Data.Sending;
+using common.Data.Utils;
 using Receiving.ReceiveStrategies.Interfaces;
 using TcpServer;
 
@@ -20,25 +23,32 @@ public class GetVersionStrategy : IReceiveStrategy
     public void Execute(Frame frame, byte[] dataReceived)
     {
         SendTask dataToSend = new SendTask();
-
-        dataToSend.frame = ConstructFrame(frame);
-
-        byte[] data = new byte[115];
-
-        byte[] sendFrame = FrameInterpeter.Serialize(dataToSend.frame);
-
-        byte[] sendData = new byte[100];
         
+
+        UInt16 interfaceVersionMajor = 1;
+        UInt16 interfaceVersionMinor = 1;
+        string softwareVersion = string.Concat(Assembly.GetEntryAssembly()?.GetName().Name, " ", Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? "undefined version");
+        UInt16 softwareVersionStringLenght = (UInt16)softwareVersion.Length;
+        
+        dataToSend.frame = ConstructFrame(frame, (short)(6 + softwareVersionStringLenght));
+        byte[] sendData = new byte[6 + softwareVersionStringLenght];
+        
+        Appender.AppendRange(ref sendData, BitConverter.GetBytes(interfaceVersionMajor));
+        Appender.AppendRange(ref sendData, BitConverter.GetBytes(interfaceVersionMinor), 2);
+        Appender.AppendRange(ref sendData, BitConverter.GetBytes(softwareVersionStringLenght), 4);
+        Appender.AppendRange(ref sendData, Encoding.ASCII.GetBytes(softwareVersion), 6);
+        
+        dataToSend.data = sendData;
         
         Server.Send(dataToSend);
     }
     
-    private Frame ConstructFrame(Frame frame)
+    private Frame ConstructFrame(Frame frame, short dataLength)
     {
         return new Frame()
         {
             Id = 101,
-            DataLength = 115,
+            DataLength = dataLength,
             MessageType = 1,
             ReceiverId = frame.SenderId,
             SenderId = 1000,

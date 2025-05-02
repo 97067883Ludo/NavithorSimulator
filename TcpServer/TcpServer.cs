@@ -24,6 +24,7 @@ public class TcpServer : ITcpServer
     
     public void Send(SendTask dataToSend)
     {
+        
         _tcpSender.AddMessageToQueue(dataToSend);
     }
     

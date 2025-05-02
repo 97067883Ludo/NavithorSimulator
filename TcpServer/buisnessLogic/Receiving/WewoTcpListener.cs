@@ -23,7 +23,7 @@ public class WewoTcpListener : IWewoTcpListener
             Listening = true;
             var stream = handler.GetStream();
             var header = new byte[9];
-            var frameSize = stream.Read(header);
+            var frameSize = stream.Read(header); //TODO: kijk naar de exceptions die evt. gegooid kunnen worden.
             while (frameSize < 9)
             {
                 frameSize = stream.Read(header);

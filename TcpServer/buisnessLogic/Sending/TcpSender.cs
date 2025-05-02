@@ -13,14 +13,15 @@ public class TcpSender
     {
         
     }
-    
-    public void Send()
+
+    private void Send()
     {
         SendTask task = SendQueue.Dequeue();
         
         if (_tcpClient.Connected)
         {
-            _tcpClient.Client.Send(TaskConverter.ToBytes(task));
+            byte[] data = TaskConverter.ToBytes(task);
+            _tcpClient.Client.Send(data);
         }
     }
 

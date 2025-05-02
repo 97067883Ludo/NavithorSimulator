@@ -6,5 +6,5 @@ public struct SendTask
 {
     public Frame frame;
     
-    
+    public byte[] data;
 }

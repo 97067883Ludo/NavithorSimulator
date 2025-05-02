@@ -16,5 +16,16 @@
       <ProjectReference Include="..\Receiving\Receiving.csproj" />
       <ProjectReference Include="..\TcpServer\TcpServer.csproj" />
     </ItemGroup>
+    
+    <PropertyGroup>
+        <UseRazorSourceGenerator>false</UseRazorSourceGenerator>
+        <UserSecretsId>b4369ac9-c22e-4754-8b16-2d753c59b09e</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>.</DockerfileContext>
+        <Title>WEWO Navitor simulator</Title>
+        <Product>Simulator</Product>
+        <PackageIcon>favicon.ico</PackageIcon>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+    </PropertyGroup>
 
 </Project>
