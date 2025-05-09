@@ -1,3 +1,4 @@
+using common.Data.FrameUtils;
 using Receiving.ReceiveStrategies.GetProductionAreaInformation.Handlers;
 
 namespace Receiving.ReceiveStrategies.GetProductionAreaInformation;
@@ -11,8 +12,15 @@ public class GetProductionAreaInformationReceiver : IGetProductionAreaInformatio
         _handlers = handlers;
     }
 
-    public void Execute()
+    public void Execute(Frame frame, byte[] data)
     {
-        
+        foreach (IGetProductionAreaInformationReceiverHandler handler in _handlers)
+        {
+            if (handler.MessageId == frame.Id)
+            {
+                handler.Execute(frame, data);
+                break;
+            }
+        }
     }
 }

@@ -6,6 +6,8 @@ public class SymbolicPointInformation : IGetProductionAreaInformationReceiverHan
 {
     public void Execute(Frame frame, byte[] dataReceived)
     {
-        throw new NotImplementedException();
+        
     }
+
+    public int MessageId { get; set; } = 3;
 }

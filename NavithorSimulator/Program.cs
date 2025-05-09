@@ -1,6 +1,9 @@
 using DatabaseContext;
+using NavithorSimulator;
 using Receiving;
 using Receiving.ReceiveStrategies;
+using Receiving.ReceiveStrategies.GetProductionAreaInformation;
+using Receiving.ReceiveStrategies.GetProductionAreaInformation.Handlers;
 using Receiving.ReceiveStrategies.Interfaces;
 using TcpServer;
 
@@ -17,7 +20,10 @@ builder.Services.AddDbContext<DataContext>();
 
 builder.Services.AddSingleton<ITcpServer, TcpServer.TcpServer>();
 
+RegisterReceiving.RegisterGetProductionAreaInformationHandler(builder.Services);
+
 // Register the receive strategies
+builder.Services.AddSingleton<IReceiveStrategy, GetProductionAreaInformationHandler>();
 builder.Services.AddSingleton<IReceiveStrategy, GetVersionStrategy>();
 
 // Add the TcpReceiver as a singleton

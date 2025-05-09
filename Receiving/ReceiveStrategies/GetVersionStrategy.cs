@@ -24,18 +24,15 @@ public class GetVersionStrategy : IReceiveStrategy
     {
         SendTask dataToSend = new SendTask();
         
-
-        UInt16 interfaceVersionMajor = 1;
-        UInt16 interfaceVersionMinor = 1;
         string softwareVersion = string.Concat(Assembly.GetEntryAssembly()?.GetName().Name, " ", Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? "undefined version");
-        UInt16 softwareVersionStringLenght = (UInt16)softwareVersion.Length;
+        UInt16 softwareVersionStringLength = (UInt16)softwareVersion.Length;
         
-        dataToSend.frame = ConstructFrame(frame, (short)(6 + softwareVersionStringLenght));
-        byte[] sendData = new byte[6 + softwareVersionStringLenght];
+        dataToSend.frame = ConstructFrame(frame, (short)(6 + softwareVersionStringLength));
+        byte[] sendData = new byte[6 + softwareVersionStringLength];
         
-        Appender.AppendRange(ref sendData, BitConverter.GetBytes(interfaceVersionMajor));
-        Appender.AppendRange(ref sendData, BitConverter.GetBytes(interfaceVersionMinor), 2);
-        Appender.AppendRange(ref sendData, BitConverter.GetBytes(softwareVersionStringLenght), 4);
+        Appender.AppendRange(ref sendData, BitConverter.GetBytes(0));
+        Appender.AppendRange(ref sendData, BitConverter.GetBytes(0), 2);
+        Appender.AppendRange(ref sendData, BitConverter.GetBytes(softwareVersionStringLength), 4);
         Appender.AppendRange(ref sendData, Encoding.ASCII.GetBytes(softwareVersion), 6);
         
         dataToSend.data = sendData;
