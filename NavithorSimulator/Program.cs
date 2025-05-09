@@ -1,4 +1,6 @@
 using DatabaseContext;
+using DatabaseContext.Factories;
+using Microsoft.EntityFrameworkCore;
 using NavithorSimulator;
 using Receiving;
 using Receiving.ReceiveStrategies;
@@ -16,6 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IDataContextFactory, DataContextFactory>();
 builder.Services.AddDbContext<DataContext>();
 
 builder.Services.AddSingleton<ITcpServer, TcpServer.TcpServer>();

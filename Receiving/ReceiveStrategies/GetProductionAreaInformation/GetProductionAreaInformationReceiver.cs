@@ -16,7 +16,7 @@ public class GetProductionAreaInformationReceiver : IGetProductionAreaInformatio
     {
         foreach (IGetProductionAreaInformationReceiverHandler handler in _handlers)
         {
-            if (handler.MessageId == frame.Id)
+            if (handler.MessageId == data[0])
             {
                 handler.Execute(frame, data);
                 break;

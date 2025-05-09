@@ -12,4 +12,6 @@ public class SymbolicPoint
     public float y { get; set; }
 
     public string SymbolicPointName { get; set; }
+    public string Type { get; set; }
+    public int SymbolicPointId { get; set; }
 }

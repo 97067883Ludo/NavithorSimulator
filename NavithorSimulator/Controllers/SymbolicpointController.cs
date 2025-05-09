@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace NavithorSimulator.Controllers;
 
 [Route("api/[controller]")]
-public class RouteController : ControllerBase
+public class SymbolicpointController : ControllerBase
 {
 
     private readonly DataContext _dataContext;
 
-    public RouteController(DataContext dataContext)
+    public SymbolicpointController(DataContext dataContext)
     {
         _dataContext = dataContext;
     }
@@ -25,9 +25,7 @@ public class RouteController : ControllerBase
         {
             return BadRequest("No file uploaded.");
         }
-        // Process the uploaded file here
         
-        // string filecontents = NewMethod(file);
         XDocument xmlcontent = XDocument.Load(file.OpenReadStream());
         var result = xmlcontent.Root?.Element("symbolic_points").Elements("symbolic_point");
         HashSet<SymbolicPoint> symbolicPoints = [];
