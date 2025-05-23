@@ -5,7 +5,7 @@ using common.Data.FrameUtils;
 
 namespace TcpServer;
 
-public class WewoTcpListener : IWewoTcpListener
+public class WewoTcpListener : IWewoTcpListener, IDisposable
 {
     public static event OnReceive? OnReceive;
     
@@ -18,40 +18,71 @@ public class WewoTcpListener : IWewoTcpListener
 
     public void StartListing(TcpClient handler)
     {
+        NetworkStream stream = handler.GetStream();
+        Listening = true;
         while (handler.Connected)
         {
-            Listening = true;
-            var stream = handler.GetStream();
             var header = new byte[9];
+            
+            if (ReadStreamUntilValidFrame(handler, stream, header)) return;
+
+            var frame = FrameInterpeter.Deserialize(header);
+            var data = new byte[frame.DataLength];
+
+            ReadDataUntilComplete(stream, data, frame);
+
+            OnProcessCompleted(frame, data);
+        }
+
+        Console.WriteLine("Stopped Listening");
+    }
+
+    private bool ReadStreamUntilValidFrame(TcpClient handler, NetworkStream stream, byte[] header)
+    {
+        try
+        {
+            handler.GetStream();
             var frameSize = stream.Read(header); //TODO: kijk naar de exceptions die evt. gegooid kunnen worden.
             while (frameSize < 9)
             {
                 frameSize = stream.Read(header);
-                if (!handler.Connected) goto EndPoint;
             }
+        }
+        catch (Exception e)
+        {
+            //TODO: Handle exception Export to prometheus.
+            return true;
+        }
 
-            var frame = FrameInterpeter.Deserialize(header);
-            var data = new byte[frame.DataLength];
+        return false;
+    }
+
+    private void ReadDataUntilComplete(NetworkStream stream, byte[] data, Frame frame)
+    {
+        try
+        {
             var dataSize = stream.Read(data);
             while (dataSize < frame.DataLength)
             {
                 dataSize = stream.Read(data);
-                if (!handler.Connected) goto EndPoint;
             }
-
-            OnProcessCompleted(frame, data);
-
-            EndPoint: ;
         }
-
-        Console.WriteLine("Stopped Listening");
-        handler.Dispose();
+        catch (Exception e)
+        {
+                
+        }
     }
-    
+
     protected virtual void OnProcessCompleted(Frame frame, byte[] data)
     {
-
+        //TODO: Go to Application layer.
         OnReceive?.Invoke(this, new OnReceiveArgs(frame, data));
+    }
+
+    public void Dispose()
+    {
+        Listening = false;
+        OnReceive = null;
     }
 }
 

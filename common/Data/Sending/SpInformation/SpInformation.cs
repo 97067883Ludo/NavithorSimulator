@@ -5,7 +5,7 @@ public struct SpInformation
     public uint Id;
     public uint Type;
     public short AvailableForMachineTypesCount;
-    public uint[] AvailableForMachineTypes;
+    public int[] AvailableForMachineTypes;
     public short NameStringLength;
     public string Name;
 }

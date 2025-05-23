@@ -24,8 +24,14 @@ public class SymbolicPointInformation : IGetProductionAreaInformationReceiverHan
         {
             SpInformation newPoint = new SpInformation
             {
-                Id = (uint)point.Id
+                AvailableForMachineTypes = new int[] { 1 },
+                AvailableForMachineTypesCount = 1,
+                Id = (uint)point.Id,
+                Name = point.SymbolicPointName,
+                NameStringLength = (short)point.SymbolicPointName.Length,
+                Type = uint.Parse(point.Type),
             };
+            spInformation.Add(newPoint);
         }
     }
 

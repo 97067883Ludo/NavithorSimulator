@@ -41,6 +41,7 @@ public class TcpServer : ITcpServer
             _tcpClient = _tcpListener.AcceptTcpClient();
             _tcpSender.Start(_tcpClient);
             _wewoTcpListener.StartListing(_tcpClient);
+            _wewoTcpListener.Dispose();
         });
     }
     
