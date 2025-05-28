@@ -1,19 +1,19 @@
-using System.Net;
 using System.Net.Sockets;
 using common.Data.EventArgs;
 using common.Data.FrameUtils;
+using Contracts.TCP_Contracts;
 
-namespace TcpServer;
+namespace TcpServer.buisnessLogic.Receiving;
 
 public class WewoTcpListener : IWewoTcpListener, IDisposable
 {
-    public static event OnReceive? OnReceive;
-    
     private bool Listening { get; set; }
     
-    public WewoTcpListener()
+    private IReceivingContract _receivehandler;
+    
+    public WewoTcpListener(IReceivingContract receivehandler)
     {
-
+        _receivehandler = receivehandler;
     }
 
     public void StartListing(TcpClient handler)
@@ -76,15 +76,11 @@ public class WewoTcpListener : IWewoTcpListener, IDisposable
     protected virtual void OnProcessCompleted(Frame frame, byte[] data)
     {
         //TODO: Go to Application layer.
-        OnReceive?.Invoke(this, new OnReceiveArgs(frame, data));
+        _receivehandler.ReceiveMessage(new OnReceiveArgs(frame, data));
     }
 
     public void Dispose()
     {
         Listening = false;
-        OnReceive = null;
     }
 }
-
-public delegate void OnReceive(object sender, OnReceiveArgs args);
-

@@ -4,9 +4,13 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <StartupObject>NavithorSimulator.Program</StartupObject>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Autofac" Version="8.3.0" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
+        <PackageReference Include="Autofac.Mvc5" Version="6.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.15" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
@@ -15,6 +19,11 @@
       <ProjectReference Include="..\DatabaseContext\DatabaseContext.csproj" />
       <ProjectReference Include="..\Receiving\Receiving.csproj" />
       <ProjectReference Include="..\TcpServer\TcpServer.csproj" />
+      <ProjectReference Include="..\Presentation.WebApi\Presentation.WebApi.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Dtos\" />
     </ItemGroup>
     
     <PropertyGroup>

@@ -1,23 +1,21 @@
 ﻿using System.Reflection;
 using System.Text;
-using common.Data.EventArgs;
 using common.Data.FrameUtils;
 using common.Data.Sending;
 using common.Data.Utils;
+using Contracts.TCP_Contracts;
 using Receiving.ReceiveStrategies.Interfaces;
-using TcpServer;
 
 namespace Receiving.ReceiveStrategies;
 
 public class GetVersionStrategy : IReceiveStrategy
 {
+    private ISendingContract _sending { get; init; }
 
-    public GetVersionStrategy(ITcpServer server)
+    public GetVersionStrategy(ISendingContract sending)
     {
-        Server = server;
+        _sending = sending;
     }
-
-    private readonly ITcpServer Server;
     
     public int MessageId { get; set; } = 1;
     public void Execute(Frame frame, byte[] dataReceived)
@@ -28,7 +26,7 @@ public class GetVersionStrategy : IReceiveStrategy
         UInt16 softwareVersionStringLength = (UInt16)softwareVersion.Length;
         
         dataToSend.frame = ConstructFrame(frame, (short)(6 + softwareVersionStringLength));
-        byte[] sendData = new byte[6 + softwareVersionStringLength];
+        byte[] sendData = new byte[6 + softwareVersionStringLength]; 
         
         Appender.AppendRange(ref sendData, BitConverter.GetBytes(0));
         Appender.AppendRange(ref sendData, BitConverter.GetBytes(0), 2);
@@ -37,9 +35,9 @@ public class GetVersionStrategy : IReceiveStrategy
         
         dataToSend.data = sendData;
         
-        Server.Send(dataToSend);
+        _sending.SendMessage(dataToSend);
     }
-    
+
     private Frame ConstructFrame(Frame frame, short dataLength)
     {
         return new Frame()

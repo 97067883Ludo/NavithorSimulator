@@ -8,10 +8,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\common\common.csproj" />
-      <ProjectReference Include="..\Contracts\Contracts.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Autofac" Version="8.3.0" />
-    </ItemGroup>
 </Project>

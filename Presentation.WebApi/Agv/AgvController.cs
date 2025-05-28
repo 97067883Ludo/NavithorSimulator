@@ -1,9 +1,8 @@
 ﻿using DatabaseContext;
-using DatabaseContext.Models;
 using Microsoft.AspNetCore.Mvc;
-using NavithorSimulator.Dtos;
+using Presentation.WebApi.Agv.Model;
 
-namespace NavithorSimulator.Controllers;
+namespace Presentation.WebApi.Agv;
 
 [Route("api/[controller]")]
 public class AgvController : ControllerBase
@@ -27,7 +26,7 @@ public class AgvController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] CreateAgv value)
     {
-        Agv agv = new Agv
+        DatabaseContext.Models.Agv agv = new DatabaseContext.Models.Agv
         {
             AgvId = value.AgvId
         };

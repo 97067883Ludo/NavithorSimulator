@@ -1,25 +1,24 @@
 ﻿using common.Data.EventArgs;
+using Contracts.TCP_Contracts;
 using Receiving.ReceiveStrategies.Interfaces;
-using TcpServer;
 
 namespace Receiving;
 
-public class TcpReceiver
+public class TcpReceiver : IReceivingContract
 {
     private IEnumerable<IReceiveStrategy> _receiveStrategies;
     public TcpReceiver(IEnumerable<IReceiveStrategy> receiveStrategies)
     {
-        WewoTcpListener.OnReceive += ReceiveTcpMessage;
         _receiveStrategies = receiveStrategies;
     }
 
-    private void ReceiveTcpMessage(object sender, OnReceiveArgs args)
+    public void ReceiveMessage(OnReceiveArgs message)
     {
         foreach (IReceiveStrategy receiveStrategy in _receiveStrategies)
         {
-            if (receiveStrategy.MessageId == args.Frame.Id)
+            if (receiveStrategy.MessageId == message.Frame.Id)
             {
-                receiveStrategy.Execute(args.Frame, args.Data);
+                receiveStrategy.Execute(message.Frame, message.Data);
             }
         }
     }

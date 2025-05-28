@@ -7,8 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\common\common.csproj" />
+      <ProjectReference Include="..\Contracts\Contracts.csproj" />
       <ProjectReference Include="..\DatabaseContext\DatabaseContext.csproj" />
-      <ProjectReference Include="..\TcpServer\TcpServer.csproj" />
     </ItemGroup>
 
     <ItemGroup>
