@@ -21,10 +21,6 @@
       <ProjectReference Include="..\TcpServer\TcpServer.csproj" />
       <ProjectReference Include="..\Presentation.WebApi\Presentation.WebApi.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Dtos\" />
-    </ItemGroup>
     
     <PropertyGroup>
         <UseRazorSourceGenerator>false</UseRazorSourceGenerator>

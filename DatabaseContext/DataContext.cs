@@ -9,7 +9,7 @@ public class DataContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlite("Data Source=Application.db;Cache=Shared");
+            optionsBuilder.UseSqlite("Data Source=C:\\Users\\ltielbeke\\Desktop\\Application.db;Cache=Shared");
         }
     }
     

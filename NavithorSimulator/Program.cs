@@ -1,46 +1,50 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Contracts.TCP_Contracts;
+using DatabaseContext;
 using Receiving;
 using Receiving.ReceiveStrategies;
 using Receiving.ReceiveStrategies.GetProductionAreaInformation;
 using Receiving.ReceiveStrategies.GetProductionAreaInformation.Handlers;
 using Receiving.ReceiveStrategies.Interfaces;
+using Services.SymbolicPointController;
+using Services.SymbolicPointController.Contracts;
 using TcpServer;
-using TcpServer.buisnessLogic.Receiving;
 using TcpServer.buisnessLogic.Sending;
 
 namespace NavithorSimulator;
 
+using Autofac.Extensions.DependencyInjection;
+// ... other using statements
+
 public static class Program
 {
-    private static IContainer _container;
     public static void Main(string[] args)
     {
-        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-        var autofacBuilder = new ContainerBuilder();
-        
-        builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-        
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Register services with ASP.NET Core DI
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        autofacBuilder.RegisterType<SymbolicPointInformation>().As<IGetProductionAreaInformationReceiverHandler>().SingleInstance();
-        autofacBuilder.RegisterType<GetProductionAreaInformationReceiver>().As<IGetProductionAreaInformationReceiver>().SingleInstance();
+        // Use Autofac as the DI container
+        builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+        builder.Host.ConfigureContainer<ContainerBuilder>(autofacBuilder =>
+        {
+            autofacBuilder.RegisterType<DataContext>().AsSelf().SingleInstance();
+            autofacBuilder.RegisterType<SymbolicPointInformation>().As<IGetProductionAreaInformationReceiverHandler>().SingleInstance();
+            autofacBuilder.RegisterType<GetProductionAreaInformationReceiver>().As<IGetProductionAreaInformationReceiver>().SingleInstance();
+            autofacBuilder.RegisterType<GetProductionAreaInformationHandler>().As<IReceiveStrategy>().SingleInstance();
+            autofacBuilder.RegisterType<GetVersionStrategy>().As<IReceiveStrategy>().SingleInstance();
+            autofacBuilder.RegisterType<TcpSender>().As<ISendingContract>().SingleInstance();
+            autofacBuilder.RegisterType<TcpReceiver>().As<IReceivingContract>().SingleInstance();
+            autofacBuilder.RegisterType<SymbolicpointService>().As<ISymbolicPointServiceContract>().SingleInstance();
+            autofacBuilder.RegisterType<TcpServer.TcpServer>().As<ITcpServer>().SingleInstance().AutoActivate();
+        });
 
-        autofacBuilder.RegisterType<GetProductionAreaInformationHandler>().As<IReceiveStrategy>().SingleInstance();
-        autofacBuilder.RegisterType<GetVersionStrategy>().As<IReceiveStrategy>().SingleInstance();
+        var app = builder.Build();
 
-        autofacBuilder.RegisterType<TcpSender>().As<ISendingContract>().SingleInstance();
-        autofacBuilder.RegisterType<TcpReceiver>().As<IReceivingContract>().SingleInstance();
-        
-        autofacBuilder.RegisterType<TcpServer.TcpServer>().As<ITcpServer>().SingleInstance().AutoActivate();
-        
-        _container = autofacBuilder.Build();
-        
-        WebApplication app = builder.Build();
-        
         app.UseSwagger();
         app.UseSwaggerUI();
         app.UseAuthorization();
