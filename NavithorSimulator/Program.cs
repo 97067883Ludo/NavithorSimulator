@@ -34,6 +34,7 @@ public static class Program
         {
             autofacBuilder.RegisterType<DataContext>().AsSelf().SingleInstance();
             autofacBuilder.RegisterType<SymbolicPointInformation>().As<IGetProductionAreaInformationReceiverHandler>().SingleInstance();
+            autofacBuilder.RegisterType<SymbolicPointSpatialInformation>().As<IGetProductionAreaInformationReceiverHandler>();
             autofacBuilder.RegisterType<GetProductionAreaInformationReceiver>().As<IGetProductionAreaInformationReceiver>().SingleInstance();
             autofacBuilder.RegisterType<GetProductionAreaInformationHandler>().As<IReceiveStrategy>().SingleInstance();
             autofacBuilder.RegisterType<GetVersionStrategy>().As<IReceiveStrategy>().SingleInstance();

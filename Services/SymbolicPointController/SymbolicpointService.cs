@@ -34,7 +34,7 @@ public class SymbolicpointService : ISymbolicPointServiceContract
                 x = float.Parse(element.Element("x")?.Value ?? ""),
                 y = float.Parse(element.Element("y")?.Value ?? ""),
                 SymbolicPointName = element.Element("name")?.Value ?? "",
-                Type = element.Element("symboltype")?.ToString() ?? "",
+                Type = "1",
                 SymbolicPointId = int.Parse(element.Element("id")?.Value ?? "0")
             };
             symbolicPoints.Add(newSymbolicPoint);
